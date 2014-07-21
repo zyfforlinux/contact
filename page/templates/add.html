@@ -1,0 +1,93 @@
+ {% extends "layout.html" %}
+{% block head %} 添加通讯录 {% endblock %}
+{% block body %}
+<body>
+ <div class="container">
+  <div class="row" style="margin-top:160px;">
+              {% for mess in get_flashed_messages() %}
+             		 <div class="alert alert-danger">{{ mess }}</div>
+              {% endfor %}
+  <div class="col-md-4 col-md-offset-4">
+  <form class="valid form-horizontal" role="form" action="{{ url_for("add") }}" method="post">
+  
+  <div class="form-group">
+    <label for="inputName" class="col-md-3 control-label">姓名:</label>
+    <div class="col-md-8">
+      <input type="text" class="form-control" id="inputName" name="username" placeholder="username" datatype="*4-20" errormsg="至少含有四个任意字母或数字最多20个" nullmsg="姓名不能为空">
+    </div>
+  </div>
+
+
+  <div class="form-group">
+    <label for="inputYear" class="col-md-3 control-label">年龄:</label>
+    <div class="col-md-8">
+      <input type="text" class="form-control" id="inputYear" name="year" placeholder="year" datatype="n1-3" errormsg="只能是一到三位数字" nullmsg="年龄不能为空">
+    </div>
+  </div>
+
+<div class="form-group">
+<label class="col-md-3 control-label"> 性别:</label>
+<div class="col-md-8">
+<label class="radio-inline">
+  <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> 男
+</label>
+<label class="radio-inline">
+  <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> 女
+</label>
+</div>
+</div>
+
+
+  <div class="form-group">
+    <label for="inputName" class="col-md-3 control-label">职业:</label>
+    <div class="col-md-8">
+      <input type="text" class="form-control" id="inputName" name="job" placeholder="Job" datatype="s3-20" errrormsg="至少含有3个字母最多20个" nullmsg="职业不能为空">
+    </div>
+  </div>
+
+
+    <div class="form-group">
+    <label for="inputName" class="col-md-3 control-label">电话:</label>
+    <div class="col-md-8">
+      <input type="text" class="form-control" id="inputName" name="tel" placeholder="Tel" datatype="n6-11" errormsg="不是有效的电话号码" nullmsg="电话不能为空">
+    </div>
+  </div>
+
+
+  <div class="form-group">
+    <label for="inputName" class="col-md-3 control-label">QQ:</label>
+    <div class="col-md-8">
+      <input type="text" class="form-control" id="inputName" name="qq"  placeholder="QQ" datatype="n4-13" errormsg="不是有效的QQ号" nullmsg="QQ号不能为空">
+    </div>
+  </div>
+
+
+  <div class="form-group">
+    <label for="inputEmail3" class="col-md-3 control-label">邮箱:</label>
+    <div class="col-md-8">
+      <input type="email" class="form-control" id="inputEmail3" name="email" placeholder="Email" datatype"e" erronrmsg="不是有效的邮箱" nullmsg="邮箱不能为空">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-md-10 col-md-offset-1">
+      <button type="submit" class="btn btn-primary btn-lg btn-block">添加</button><span id="msgdemo2" style="margin-left:30px;"></span>
+    </div>
+  </div>
+</form>
+
+            </div>
+      </div>
+ </div>
+{% endblock %}
+{% block script %}
+$(function(){
+      $(".valid").Validform({
+        tiptype:function(msg,o,cssctl){
+      var objtip=$("#msgdemo2");
+      cssctl(objtip,o.type);
+      objtip.text(msg);
+    },
+      });
+    });
+{% endblock %}

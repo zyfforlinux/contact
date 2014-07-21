@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+{% block head %} 通讯录系统 {% endblock %}
+{% block body %}  		
+<body>
+<div class="container" id="content">
+  				<div class="row" id="table">
+  							<div class="col-md-8 col-md-offset-2">
+  								<table class="table table-bordered table-hover">
+  									<tr>
+  										<th class="text-center">姓名</th>
+  										<th class="text-center">年龄</th>
+  										<th class="text-center">性别</th>
+  										<th class="text-center">职业</th>
+  										<th class="text-center">电话</th>
+  										<th class="text-center">QQ</th>
+  										<th class="text-center">邮箱地址</th>
+  									</tr>
+									{% for data in contactdata %}
+  									<tr>
+  										<td>{{ data.username }}</td>
+  										<td>{{ data.year}}</td>
+  										<td>{{ data.sex }}</td>
+  										<td>{{ data.job }}</td>
+  										<td>{{ data.tel}}</td>
+  										<td>{{ data.qq }}</td>
+  										<td>{{ data.email }}</td>
+  									</tr>
+									{% endfor %}
+  								</table>
+  							</div>
+
+  					</div>
+					<div class="col-md-4 col-md-offset-4">
+						<ul class="pager">
+						  <li><a href="{% if pagination.has_prev %}{{ url_for("index",
+           page = pagination.page - 1) }}{% else %}#{% endif %}">上一页</a></li>
+							    </li>
+			        	   {% for p in pagination.iter_pages() %}
+                				{% if p %}
+               				  {% if p == pagination.page %}
+      				     <li class="active">
+           				<a href="{{ url_for("index", page = p) }}">{{ p }}</a>
+         			     </li>
+               				 {% else %}
+      				     <li>
+         				  <a href="{{ url_for("index", page = p) }}">{{ p }}</a>
+        			   </li>
+           			     {% endif %}
+              		  		 {% else %}
+         			  <li class="disabled"><a href="#">&hellip;</a></li>
+                	 {% endif %}
+         	  {% endfor %}
+           <li{% if not pagination.has_next %} class="disabled"{% endif %}>
+
+						  <li><a href="{% if pagination.has_next %}{{ url_for("index",
+           page = pagination.page + 1) }}{% else %}#{% endif %}">下一页</a></li>
+						</ul>
+		
+					</div>
+
+  		</div>
+{% endblock %}
+       {% block script %}
+	var height = document.documentElement.clientHeight;
+        var formheight = document.getElementById("table").offsetHeight;
+        height = (height - formheight)/2-100;
+   //     alert(height);
+        document.getElementById("content").style.marginTop=height+'px';
+	{% endblock %}

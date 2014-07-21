@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% block head %} 通讯录登陆系统 {% endblock %}
+{% block body %}
+<body>
+ 
+ <div class="container">
+  <div class="row" id="content">
+	{% for mess in get_flashed_messages() %}
+		<div class="alert alert-danger">{{ mess }}</div>
+	{% endfor %}
+  <div class="col-md-12"><p><h1 class="text-center">通讯录系统登录</h1></p><div>
+  <div class="col-md-4 col-md-offset-4" id="form">
+  <form class="form-horizontal" action="{{ url_for("admin") }}" method=post role="form" style="border-color:#3071A9;border-style:solid;border-width:3px;padding-top:12px;">
+  <div class="form-group">
+    <label for="inputEmail3" class="col-md-3 control-label">邮箱:</label>
+    <div class="col-md-8">
+      <input type="email" class="form-control" id="inputEmail3" placeholder="Email" name="email">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputPassword3" class="col-md-3 control-label">密码:</label>
+    <div class="col-md-8">
+      <input type="password" class="form-control" id="inputPassword3" placeholder="Password" name="pass">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox"> 记住我
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-md-10 col-md-offset-1">
+      <button type="submit" class="btn btn-primary btn-lg btn-block">登陆</button>
+    </div>
+  </div>
+</form>
+              </div>
+      </div>
+ </div>
+{% endblock %}
+{% block script %}
+        var height = document.documentElement.clientHeight;
+        var formheight = document.getElementById("form").offsetHeight;
+        height = (height - formheight)/2-100;
+   //     alert(height);
+        document.getElementById("content").style.marginTop=height+'px';
+{% endblock %}

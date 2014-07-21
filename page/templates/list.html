@@ -1,0 +1,96 @@
+{% extends "layout.html" %}		
+{% block head %} 通讯录 {% endblock %}
+{% block body %}
+<body>
+<div class="row" style="margin-top:50px">
+					<div class="col-md-3 col-md-offset-9">
+		<span class="glyphicon glyphicon-user"></span>{{ session.username }}
+ 		   			 <a class="btn btn-success" href="{{ url_for('logout') }}">注销</a>	
+					</div>
+		</div>
+  		<div class="container" id="content">
+  					<div class="row" id="table">
+					        {% for mess in get_flashed_messages() %}
+         				       		<div class="alert alert-danger">{{ mess }}</div>
+ 						{% endfor %}
+  							<div class="col-md-12">
+  								<table class="table table-bordered table-hover">
+  									<tr>
+  										<th class="text-center">姓名</th>
+  										<th class="text-center">年龄</th>
+  										<th class="text-center">性别</th>
+  										<th class="text-center">职业</th>
+  										<th class="text-center">电话</th>
+  										<th class="text-center">QQ</th>
+  										<th class="text-center">邮箱地址</th>
+                    								  <th class="text-center">删除</th>
+                    								  <th class="text-center">编辑</th>
+                    								  <th class="text-center">增加</th>
+  									</tr>
+						{% for data in contactdata %}
+  									<tr>
+  										<td class="text-center">{{ data.username }}</td>
+  										<td class="text-center">{{ data.year }}</td>
+                      <td class="text-center">{{ data.sex }}</td>
+                      <td class="text-center">{{ data.job }}</td>
+                      <td class="text-center">{{ data.tel }}</td>
+                      <td class="text-center">{{ data.qq }}</td>
+                      <td class="text-center">{{ data.email }}</td>
+                      <td  class="text-center">
+
+	               <a class="btn btn-success" href="{{ url_for("delete",page=data.id)}}">删除</a>
+
+                      </td>
+                      <td  class="text-center">
+                      <a class="btn btn-danger" href="{{ url_for("update",page=data.id) }}">编辑</a>
+                      </td>
+
+                      <td  class="text-center">
+                     <a class="btn btn-warning" href="{{ url_for("add")}}">增加</a>
+                      </td>
+
+  									</tr>
+						{% endfor %}
+  								</table>
+  							</div>
+
+  				</div>
+  		</div>
+	
+
+		              <div class="col-md-4 col-md-offset-4">
+                                                <ul class="pager">
+                                                  <li><a href="{% if pagination.has_prev %}{{ url_for("show",
+           page = pagination.page - 1) }}{% else %}#{% endif %}">上一页</a></li>
+                                                            </li>
+                                           {% for p in pagination.iter_pages() %}
+                                                {% if p %}
+                                          {% if p == pagination.page %}
+                                     <li class="active">
+                                        <a href="{{ url_for("show", page = p) }}">{{ p }}</a>
+                                     </li>
+                                         {% else %}
+                                     <li>
+                                          <a href="{{ url_for("show", page = p) }}">{{ p }}</a>
+                                   </li>
+                                     {% endif %}
+                                         {% else %}
+                                  <li class="disabled"><a href="#">&hellip;</a></li>
+                         {% endif %}
+                  {% endfor %}
+           <li{% if not pagination.has_next %} class="disabled"{% endif %}>
+
+                                                  <li><a href="{% if pagination.has_next %}{{ url_for("show",
+           page = pagination.page + 1) }}{% else %}#{% endif %}">下一页</a></li>
+                                                </ul>
+
+                                        </div>
+	{% endblock %}
+	{% block script %}
+       	 var height = document.documentElement.clientHeight;
+       	 var formheight = document.getElementById("table").offsetHeight;
+       	 height = (height - formheight)/2-150;
+   //     alert(height);
+       	 document.getElementById("content").style.marginTop=height+'px';
+	{% endblock %}
+
